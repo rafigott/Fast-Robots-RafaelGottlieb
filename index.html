@@ -148,23 +148,23 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Prelab</h3>
                             <p>The bluetooth software used in this course was not compatible with Windows 11. Becuase of this, the setup involved loading Debian using WSL, Windows Subsystem for Linux. This was loaded onto the Windows 11 laptop, and Python using Jupyter Notebook was loaded through the WSL. Using this system, the Artemis board was able to connect to the Python code.</p>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/OVXpZrULHZs">
-                            </iframe>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <p>Once Debian was loaded onto the laptop, the next step was to connect the Artemis Board to the Python code. The first step in this process was to change the MAC address of the Artemis from the default in the code to the one used in the lab. By uploading the given ble_arduino.ino code file to the Artemis, the MAC address reads c0:07:1c:96:23:44, shown in the figure below. /p>
+                            <h3 class="mb-0">Connecting the Artmemis</h3>
+                            <p>Once Debian was loaded onto the laptop, the next step was to connect the Artemis Board to the Python code. The first step in this process was to change the MAC address of the Artemis from the default in the code to the one used in the lab. By uploading the given ble_arduino.ino code file to the Artemis, the MAC address reads c0:07:1c:96:23:44, shown in the figure below./p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab2MacAddress.jpg" alt="..." width="400" height="300" /></span>
+                            <p>The MAC address was also changed in the Python code in the connection.yaml file shown below. This allows the Python code to read the device via bluetooth and connect to the Artemis. The second step needed to connect the device was to use a unique UUID address. Many of the Artemis boards in the course share the same MAC address, meaning the Python code might connect to different boards. Because of this, a UUID was needed to create a unique connection to the Artmeis board. This was generated in Python and then put in the "ble_service" line in connection.yaml, as well as the "BLE_UUID_TEST_SERVICE" in the Arduino code.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2ConnectionYAML.jpg" alt="..." width="400" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2uuid.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">"Example4_analogRead"</h3>
+                            <h3 class="mb-0">Part 2: UUID</h3>
                             <p>The third test involved using the temperature sensor. The temperature was sent to the serial monitor in 10^-3 degrees Celsius. To validicize the sensor, I covered the Atermis board with my hand, and the temperature increased slightly from 32.9 Celsius to 33.1 Celsius.</p>
                             <iframe width="500" height="400"
                                 src="https://www.youtube.com/embed/4Ngq-57e-P4">
