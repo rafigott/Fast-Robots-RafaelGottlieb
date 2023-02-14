@@ -140,7 +140,6 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
                             <p>THe objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connection Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/IMG_3771.jpg" alt="..." width="500" height="400" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -167,45 +166,53 @@
                             <h3 class="mb-0">ECHO Command</h3>
                             <p>In order to test the connection between the Artemis board on the computer, multiple commands were made. The first was the ECHO command. This command sent a character string to the Artemis from the Python code, which then sent the phrase back to the Python code. This command was added to the Arduino code in ble_arduino.ide. Here, echo was added to the list of command types:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab2CommandTypes.jpg" alt="..." width="400" height="300" /></span>
-                            <p></p>
+                            <p>The code for the ECHO command is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2Echo.jpg" alt="..." width="400" height="300" /></span>
+                            <p>In Python, the command is sent and received using these lines of code:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2EchoPython.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
+          
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">"GET_TIME_MILLIS Command"</h3>
-                            <p></p>
+                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
+                             <p>This is sent to Python, with the code shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">GET_TEMP_5s</h3>
-                            <p></p>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
-                            </iframe>
-                            <p>T.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/TWC9RrElk6U">
-                            </iframe>
+                            <h3 class="mb-0">"Notification Handler"</h3>
+                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
+                             <p>This is sent to Python, with the code shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">GET_TEMP_5s Command</h3>
+                            <p>This command involved extracting five temperature readings in the span of five seconds. This involved developing a notification handler that would receive a string of time and temperature values at one time step. It would then extract both time and temperature and print them. This is shown in the Python code:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.jpg" alt="..." width="400" height="300" /></span>
+                            <p>The Arduino code for the command was then written, and would send a string at each time step.<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5s.jpg" alt="..." width="400" height="300" /></span>
+                            <p>This would then print five temperature values in the span of five seconds:<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sPython.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">GET_TEMP_5s_RAPID</h3>
-                            <p></p>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
-                            </iframe>
-                            <p>T.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/TWC9RrElk6U">
-                            </iframe>
-                        </div>
+                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted.<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapid.jpg" alt="..." width="400" height="300" /></span>
+                            <p>This would then print temperature values in the span of five seconds:<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapidPython.jpg" alt="..." width="400" height="300" /></span>                        </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -219,14 +226,8 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Effective Rate and Overhead</h3>
                             <p></p>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
-                            </iframe>
                             <p>T.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/TWC9RrElk6U">
-                            </iframe>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
