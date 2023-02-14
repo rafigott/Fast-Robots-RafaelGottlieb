@@ -64,13 +64,13 @@
                 </div>
             </section>
             <hr class="m-0" />
-            <!-- Experience-->
+            <!-- Lab 1 -->
             <section class="resume-section" id="Lab1">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Lab 1</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Introduction</h3>
+                            <h3 class="mb-0">Lab Objective</h3>
                             <p>The goal of this lab was to test the Artemis board with a number of examples to confirm its functionality. This involved testing the LED on the board, the serial output, the temperature sensor, and the microphone.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/IMG_3771.jpg" alt="..." width="500" height="400" /></span>
                         </div>
@@ -132,31 +132,68 @@
                 </div>
             </section>
             <hr class="m-0" />
-            <!-- Experience-->
+            <!-- Lab 2 -->
             <section class="resume-section" id="Lab2">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Lab 2</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>THe objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connection Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/IMG_3771.jpg" alt="..." width="500" height="400" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Prelab</h3>
+                            <p>The bluetooth software used in this course was not compatible with Windows 11. Becuase of this, the setup involved loading Debian using WSL, Windows Subsystem for Linux. This was loaded onto the Windows 11 laptop, and Python using Jupyter Notebook was loaded through the WSL. Using this system, the Artemis board was able to connect to the Python code.</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/OVXpZrULHZs">
+                            </iframe>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
                             <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
+                            <p>Once Debian was loaded onto the laptop, the next step was to connect the Artemis Board to the Python code. The first step in this process was to change the MAC address of the Artemis from the default in the code to the one used in the lab. By uploading the given ble_arduino.ino code file to the Artemis, the MAC address reads c0:07:1c:96:23:44, shown in the figure below. /p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2MacAddress.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">"Example4_analogRead"</h3>
+                            <p>The third test involved using the temperature sensor. The temperature was sent to the serial monitor in 10^-3 degrees Celsius. To validicize the sensor, I covered the Atermis board with my hand, and the temperature increased slightly from 32.9 Celsius to 33.1 Celsius.</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/4Ngq-57e-P4">
+                            </iframe>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">"Example1_MicrophoneOutput"</h3>
+                            <p>This test involed using the microphone to find the loudest frequency. This is shown in the video below.</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/7aqY5JEJ3Pw">
+                            </iframe>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">5000-level: Musical Tuner</h3>
+                            <p>This test was done to determine the musical note "A." When the microphone identified an "A," which has a frequency of about 440Hz, the LED would turn on. Otherwise, the LED would remain off. The code here had a range of frequencies +-10 away from 440Hz, as the note can vary slightly. Here, the frequency was found to be 446Hz.</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
+                            </iframe>
+                            <p>This test was done to develop a musical tuner each note in the key of C major. Specifically, the tuner is able to identify the notes in C major from A4 to G5. The code below shoes the frequencies for each note, as well as a video showing the tuner in action.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/TWC9RrElk6U">
+                            </iframe>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
