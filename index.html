@@ -256,17 +256,17 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
-                            <p>The purpose of this is to be able to connect sensors to our robot. In this lab, we connected two time of flight sensors in order to find an object’s distance from the robot.</p>
+                            <p>The purpose of this lab is to be able to connect sensors to our robot. In this lab, we connected two time of flight sensors in order to find an object’s distance from the robot.</p>
                         </div>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab3_2ToF.jpg" alt="..." width="400" height="300" /></span>
+                       
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Prelab</h3>
                             <p>For the robot, we are using two identical Time-of-Flight sensors, specifically VL53L1X API. These sensors share an I2C address of 0x52. Because the ToF flight sensors have the same I2C address, we will need to use an I/O pin to connect to one of the ToF sensors and shut it off. After this, we will need to change the I2C address of the one that is currently on. Then we will need to turn the other ToF sensor on. This will allow us to read both sensors as the addresses will be different.</p>
-                            <p>The placement of the two sensors are very important in optimizing the robot's movement. There are 4 possible placements for the ToF sensors that will be considered. One must be in the front, as the car will need to know what it is driving towards. However, the second one can either be placed in the front, one of the sides, or in the back. Placing it in the front will give a more accurate reading of what is in front of the robot because we will be given more readings at one time. However, it will take longer to understand its position, as it will need to rotate to understand its surroundings. Placing it in the back is also a possibility. However, from looking at past years’ robots, it seemed challenging to position the ToF sensor in the back, as much of the hardware was in the way. Because of these reasons, the second ToF sensor will be placed on one of the sides. This will allow the robot to understand its surroundings quicker than with both sensors in the front. This is shown in the wiring diagram below:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab3WiringDiagram.jpg" alt="..." width="400" height="300" /></span>
-                            <!-- SHOW WIRING DIAGRAM -->
+                            <p>The placement of the two sensors are very important in optimizing the robot's movement. There are 4 possible placements for the ToF sensors that will be considered. One must be in the front, as the car will need to know what it is driving towards. However, the second one can either be placed in the front, one of the sides, or in the back. Placing it in the front will give a more accurate reading of what is in front of the robot because we will be given more readings at one time. However, it will take longer to understand its position, as it will need to rotate to understand its surroundings. Placing it in the back is also a possibility. However, from looking at past years’ robots, it seemed challenging to position the ToF sensor in the back, as much of the hardware was in the way. Because of these reasons, the second ToF sensor will be placed on one of the sides. This will allow the robot to understand its surroundings quicker than with both sensors in the front.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
