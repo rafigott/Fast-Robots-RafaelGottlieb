@@ -294,16 +294,20 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Connecting the 2 ToF Sensors</h3>
-                            <p></p>
+                            <p>Described in the prelab, the two sensors need to have different I2C addresses in order to be able to gather data from both. To do this, one of the sensors was given 0 power from pin 8, and then the sensor that still was power was changed to have an address of 0x20. The other sensor was then turned on, and both were connected:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab3BothSensorsReading.jpg" alt="..." width="400" height="300" /></span>
-                            <p></p>
+                            <p>For future labs, it is important for the robot to gather data as quickly as possible. To test this, the sensor readings were compared to time, shown in the video below. The time between measurements taken was about 40ms. This is the minimum time between data points, meaning that the limiting factor was the time that the Artemis takes between reading and sending the data. </p>
+                            <iframe width="500" height="400"
+                                src="https://youtube.com/embed/dmtk-35CIms">
+                        </iframe>
+                            <p>To test the readings, the distances of both sensors were taken over time, and sent to Jupyter using the notification handler developed in lab 2.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab3Reading2ToF.jpg" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">"N"</h3>
+                            <h3 class="mb-0">Infrared Measurements</h3>
                             <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
                              <p>This is sent to Python, with the code shown here:</p>
