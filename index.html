@@ -309,10 +309,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Infrared Measurements</h3>
-                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
-                             <p>This is sent to Python, with the code shown here:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
+                            <p>Infrared distance sensors use infrared radiation to detect objects. There are two main types of infrared sensors: active and passive. Active infrared sensors work by emitting infrared radiation, hitting an object and then bouncing back that radiation to the device. This is useful for detecting the range of an object from the device. Passive infrared sensors work by receiving the infrared radiation emitted by objects around the device. This is useful for detecting abnormalities in its proximity. For example, it is beneficial for security purposes to detect a person who shouldn’t be there or any movements in the room. However, this does not determine the distance from an object. An active infrared sensor is better for that, however, it takes longer, as it needs to both send and receive the signal. Because our robot needs to measure distances, the Time-of-Flight sensor is an active infrared sensor.</p>
+                            <p>To test if the Time-of-Flight sensor is sensitive to color and textures, three colors and two textures were tested. White, red, and blue surfaces with similar textures were tested and had the same distance of 250mm from the sensor. This showed that color did not really affect the sensor much. Additionally, smooth plastic and rough cotton was tested, but this also did not affect the sensor, both having about an average distance of 250mm.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
