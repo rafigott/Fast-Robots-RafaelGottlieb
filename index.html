@@ -187,10 +187,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">"Notification Handler"</h3>
-                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
-                             <p>This is sent to Python, with the code shown here:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
+                            <p>In order to be able to gather data without manually calling the data, a notification handler was developed to automatically recieve the data in Python. This code is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.png" alt="..." width="400" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -198,7 +196,6 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">GET_TEMP_5s Command</h3>
                             <p>This command involved extracting five temperature readings in the span of five seconds. This involved developing a notification handler that would receive a string of time and temperature values at one time step. It would then extract both time and temperature and print them. This is shown in the Python code:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.jpg" alt="..." width="400" height="300" /></span>
                             <p>The Arduino code for the command was then written, and would send a string at each time step.<\p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5s.jpg" alt="..." width="400" height="300" /></span>
                             <p>This would then print five temperature values in the span of five seconds:<\p>
@@ -209,8 +206,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">GET_TEMP_5s_RAPID</h3>
-                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted.<\p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapid.jpg" alt="..." width="400" height="300" /></span>
+                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted. Additionally, the data was stored in an array of strings on the Artemis, and once gathered, the strings were then sent in a for loop to the Python code. This enables to increase the speed of the data taken because you remove the step of sending the data while collecting the data.<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GET_TIME_5s_RAPIDcode.png" alt="..." width="400" height="300" /></span>
                             <p>This would then print temperature values in the span of five seconds:<\p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapidPython.jpg" alt="..." width="400" height="300" /></span>                        </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
@@ -218,7 +215,7 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Limitations</h3>
-                            <p></p>
+                            <p>The Artemis Board has a maximum storage of 384 kB of RAM. If we were to sample 16-bit values at 150 Hz every 5 seconds, we would be able to create 256 values before the storage on the Artemis board would run out. This means that we will need to send data in groups to Python in order to optimize the speed of data acquisition from the Artemis board.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
