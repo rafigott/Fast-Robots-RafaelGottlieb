@@ -139,7 +139,125 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
-                            <p>THe objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connection Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
+                            <p>The purpose of this is to be able to connect sensors to our robot. In this lab, we connected two time of flight sensors in order to find an object’s distance from the robot.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Prelab</h3>
+                            <p>For the robot, we are using two identical Time-of-Flight sensors, specifically VL53L1X API. These sensors share an I2C address of 0x52. Because the ToF flight sensors have the same I2C address, we will need to use an I/O pin to connect to one of the ToF sensors and shut it off. After this, we will need to change the I2C address of the one that is currently on. Then we will need to turn the other ToF sensor on. This will allow us to read both sensors as the addresses will be different.</p>
+                            <p>The placement of the two sensors are very important in optimizing the robot's movement. There are 4 possible placements for the ToF sensors that will be considered. One must be in the front, as the car will need to know what it is driving towards. However, the second one can either be placed in the front, one of the sides, or in the back. Placing it in the front will give a more accurate reading of what is in front of the robot because we will be given more readings at one time. However, it will take longer to understand its position, as it will need to rotate to understand its surroundings. Placing it in the back is also a possibility. However, from looking at past years’ robots, it seemed challenging to position the ToF sensor in the back, as much of the hardware was in the way. Because of these reasons, the second ToF sensor will be placed on one of the sides. This will allow the robot to understand its surroundings quicker than with both sensors in the front. This is shown in the wiring diagram below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab3WiringDiagram.jpg" alt="..." width="400" height="300" /></span>
+                            <!-- SHOW WIRING DIAGRAM -->
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Connecting the ToF Sensor to the Artemis</h3>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab3ToFtoArtemis.jpg" alt="..." width="400" height="300" /></span>
+                            <p>The address displays in the serial monitor as 0x29. Though this is not the 0x52 address shown in the datasheet, the last bit is taken off because it is used as a read/write bit, meaning it is not read in the address. Because of this, the address is either 0x52 or 0x29 because they share the same seven bits except for the one that is not read.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab3ScanForI2C.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Testing the ToF Sensor</h3>
+                            <p>In order to confirm the reliability of the sensor, we need to test its measurement data. This was done by comparing four different measurements. The ToF sensor has three modes, short, medium, and long. The three modes depend on the usage of the robot. The short distance mode has more accuracy. Because of this, a slowly moving robot will benefit because it can react within 1.3m of distance. The long distance mode is beneficial for fast robots. Though there is more sensor noise, the sensor can detect 4m worth of distance, and the fast-moving robot will be able to react in time if it senses something. The medium distance mode is in between both in terms of range and distance. Initially, I believe that the robot should start with the short distance mode. This will minimize the noise of the sensor, and will help initially as we begin to work with the robot. However, through testing the robot in future labs, the 1.3m distance may not be far enough for the robot to react. This will mean that increasing the mode may be necessary.</p>
+                            <p>The short distance mode was tested by taking sensor data at 0.3m, 0.6m, 0.9m, and 1.2m. Ten data points from the sensor were taken at each point and are shown in the graph below. The sensor was very close to the actual measurements, however slightly overshot the actual measurement by 0.01m for each measurement.
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab3.jpg" alt="..." width="400" height="300" /></span>
+                            <p></p>
+                            <p>In Python, the command is sent and received using these lines of code:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2EchoPython.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+          
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Connecting 2 ToF Sensors</h3>
+                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
+                             <p>This is sent to Python, with the code shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">"Notification Handler"</h3>
+                            <p>The next command involved receiving the current time from the Artemis board. This meant using the millis() function in the Arduino package, then converting this value to a double, and sending it as a string to Python. The Arduino code is shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTime.jpg" alt="..." width="400" height="300" /></span>
+                             <p>This is sent to Python, with the code shown here:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTimePython.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">GET_TEMP_5s Command</h3>
+                            <p>This command involved extracting five temperature readings in the span of five seconds. This involved developing a notification handler that would receive a string of time and temperature values at one time step. It would then extract both time and temperature and print them. This is shown in the Python code:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.jpg" alt="..." width="400" height="300" /></span>
+                            <p>The Arduino code for the command was then written, and would send a string at each time step.<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5s.jpg" alt="..." width="400" height="300" /></span>
+                            <p>This would then print five temperature values in the span of five seconds:<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sPython.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">GET_TEMP_5s_RAPID</h3>
+                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted.<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapid.jpg" alt="..." width="400" height="300" /></span>
+                            <p>This would then print temperature values in the span of five seconds:<\p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapidPython.jpg" alt="..." width="400" height="300" /></span>                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Limitations</h3>
+                            <p></p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Effective Rate and Overhead</h3>
+                            <p></p>
+                            <p>T.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Reliability</h3>
+                            <p></p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
+                            </iframe>
+                            <p>T.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/TWC9RrElk6U">
+                            </iframe>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Lab 3 -->
+            <section class="resume-section" id="Lab3">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 3</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>The objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connection Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -243,35 +361,6 @@
                             <iframe width="500" height="400"
                                 src="https://www.youtube.com/embed/TWC9RrElk6U">
                             </iframe>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="Lab3">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
