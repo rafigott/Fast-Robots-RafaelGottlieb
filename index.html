@@ -139,7 +139,7 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
-                            <p>The objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connection Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
+                            <p>The objective of this lab was to establish a bluetooth connection between the Artemis board and a computer. This lab involved connecting Python code to the Artemis using Arduino programming. This will then be used to send data via Bluetooth to use in future labs.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -187,8 +187,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">"Notification Handler"</h3>
-                            <p>In order to be able to gather data without manually calling the data, a notification handler was developed to automatically recieve the data in Python. This code is shown below:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.png" alt="..." width="400" height="300" /></span>
+                            <p>In order to be able to gather data without manually calling the data, a notification handler was developed to automatically recieve the data in Python. The message array will be useful for future use of the function as we will be able to receive multiple string arrays without calling it manually. This code is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2NotificationHandler.png" alt="..." width="600" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -196,20 +196,21 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">GET_TEMP_5s Command</h3>
                             <p>This command involved extracting five temperature readings in the span of five seconds. This involved developing a notification handler that would receive a string of time and temperature values at one time step. It would then extract both time and temperature and print them. This is shown in the Python code:</p>
-                            <p>The Arduino code for the command was then written, and would send a string at each time step.<\p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5s.jpg" alt="..." width="400" height="300" /></span>
-                            <p>This would then print five temperature values in the span of five seconds:<\p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sPython.jpg" alt="..." width="400" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sNot.jpg" alt="..." width="500" height="200" /></span>
+                            <p>The Arduino code for the command was then written, and would send a string at each time step.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5s.jpg" alt="..." width="600" height="300" /></span>
+                            <p>This would then print five temperature values in the span of five seconds:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sPython.jpg" alt="..." width="400" height="200" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">GET_TEMP_5s_RAPID</h3>
-                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted. Additionally, the data was stored in an array of strings on the Artemis, and once gathered, the strings were then sent in a for loop to the Python code. This enables to increase the speed of the data taken because you remove the step of sending the data while collecting the data.<\p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GET_TIME_5s_RAPIDcode.png" alt="..." width="400" height="300" /></span>
-                            <p>This would then print temperature values in the span of five seconds:<\p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapidPython.jpg" alt="..." width="400" height="300" /></span>                        </div>
+                            <p>This command involved extracting as many temperature readings as possible in the span of five seconds. The Arduino code was similar to the previous command, except it used a while loop until the code either hit 5 seconds, or the maximum amount of data points was extracted. Additionally, the data was stored in an array of strings on the Artemis, and once gathered, the strings were then sent in a for loop to the Python code. This enables to increase the speed of the data taken because you remove the step of sending the data while collecting the data.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GET_TIME_5s_RAPIDcode.png" alt="..." width="500" height="500" /></span>
+                            <p>This would then print temperature values in the span of five seconds:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2GetTemp5sRapidPython.jpg" alt="..." width="400" height="600" /></span>                        </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -222,24 +223,18 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Effective Rate and Overhead</h3>
-                            <p></p>
-                            <p>T.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
+                            <p>The data rate with 5-byte replies is 32.4 bytes/s, whereas with 120-byte replies, the data rate is 410 bytes/s. Through testing multiple byte replies in intervals of 10, it can be seen that the data rate increases with the amount of bytes sent through the graph below. This trend shows that the larger replies help reduce overhead. However, if the size is too large, the data rate will break the trend and decrease, as seen comparing byte replies with greater than 100 bytes.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2_5000_Data_Rate_Testing_Code.jpg" alt="..." width="500" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2_5000_Data_Rate_Testing.jpg" alt="..." width="500" height="400" /></span>
+
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Reliability</h3>
-                            <p></p>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/sG_7HjUqPSI">
-                            </iframe>
-                            <p>T.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab1PhotoTuner.jpg" alt="..." width="400" height="300" /></span>
-                            <iframe width="500" height="400"
-                                src="https://www.youtube.com/embed/TWC9RrElk6U">
-                            </iframe>
+                            <p>By removing the delay in the GET_TIME_5s_RAPID, the reliability of the Artemis was measured. Here we can see that the data is reliable, relaying the data without missing data. To confirm this, the time and temperature were printed in the serial monitor and confirmed with the data sent to Juptyer, shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab2_5000_Reliabilityjpg.jpg" alt="..." width="550" height="400" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
