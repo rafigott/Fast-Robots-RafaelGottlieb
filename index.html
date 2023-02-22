@@ -67,7 +67,7 @@
             <!-- Lab 1 -->
             <section class="resume-section" id="Lab1">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Lab 1</h2>
+                    <h2 class="mb-5">Lab 1: Intro to Artemis</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
@@ -135,7 +135,7 @@
             <!-- Lab 2 -->
             <section class="resume-section" id="Lab2">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Lab 2</h2>
+                    <h2 class="mb-5">Lab 2: Bluetooth Connection</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
@@ -241,10 +241,11 @@
                 </div>
             </section>
             <hr class="m-0" />
-            <!-- Lab 3 -->
+
+            <!----------------- Lab 3 --------------------->
             <section class="resume-section" id="Lab3">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Lab 3</h2>
+                    <h2 class="mb-5">Lab 3: Time-of-Flight Sensor</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
@@ -308,33 +309,90 @@
                     </div>
             </section>
             <hr class="m-0" />
-            <!-- Skills-->
+
+            <!------------------------- Lab 4 -------------------------->
             <section class="resume-section" id="Lab4">
                 <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
+                    <h2 class="mb-5">Lab 4: IMU</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>The purpose of this lab is to be able to use an IMU sensor on our robot and to begin to use the RC robot. The lab consisted of setting up and measuring the data from the IMU. Then ToF and IMU data was gathered together, and this was then implemented on the RC robot.</p>
+                        </div>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab3_2ToF.jpg" alt="..." width="400" height="300" /></span>
+                       
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Setup the IMU</h3>
+                            <p>The first step was to connect the Artemis to the IMU. This is shown below, with the IMU connected to a breakout board connecting to the Artemis:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4Artemis_IMU_Connection.jpg" alt="..." width="400" height="300" /></span>
+                            <p>In order to test the IMU, the basic example under the IMU's library manager was used. This code is shown running below. Here, AD0_VAL is the last bit of the I2CC address. By default, it is 1. We will leave it at 1 to maintain the correct address.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Code.jpg" alt="..." width="400" height="300" /></span>
+                            <p>When plotting the output with Serial Plotter on Arduino, there seems to be little noise when the IMU is not moving. This is beneficial to us because this can allow us to reset the robot if its sensor readings are unreliable while moving at any point. In the second plot, the IMU was moving, showing tha tnoise increases while the IMU moves.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_NoMove.jpg" alt="..." width="400" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Move.jpg" alt="..." width="400" height="300" /></span>                            
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Accelerometer</h3>
+                            <p>The accelerometer on the IMU gathers the acceleration in micro G's. In order to calculate the angle on the x and y axis, roll and pitch respectively, we need to use the inverse tangent. The equations for roll (phi) and pitch (theta) are shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Accel_Eq.jpg" alt="..." width="400" height="300" /></span>
+                            <p>Using these equations, the pitch and roll were found at each time step and plotted using serial plotter, seen below. When rotating either pitch or roll to 90 degrees, the other becomes very noisy at 90 degrees. For example, the first rotation to -90 degrees was pitch, and once it hit 90, the roll angle became very noisy, when it should have stayed close to 0.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll.jpg" alt="..." width="600" height="300" /></span>
+                            <p>Because of the noise in the sensor, a frequency spectrum analysis was done to determine if a low pass filter was needed to decrease the noise in the sensor reading.<p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis.jpg" alt="..." width="600" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis_AngleVSTime.jpg" alt="..." width="600" height="300" /></span>
+                            <p>Based on the plots above, it was determined that a low pass filter was not needed, as there was no high amplitude outliers at large frequencies where we will operate the robot. Additionally, from looking at the data sheet, the IMU has a low pass filter as its default, meaning an additional filter was not needed to improve the noise.</p>
+
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Gyroscope</h3>
+                            <p>In order to decrease the noise from the accelerometer data, the gyroscope reading needed to be taken. From the graphs below, the gyroscope data drifts as time increases, with the first plot being with a 20s delay, and the second being with a 100s delay. Though the data has little noise, this drifting would cause major errors with the robot, giving it the wrong angles. Because of this, the gyroscope and accelerometer needed to be combined to create an accurate sensor with little noise.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_20s.jpg" alt="..." width="700" height="100" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_100s.jpg" alt="..." width="500" height="450" /></span>
+                            <p>The complimentary filter, with the code shown below, was developed to solve this issue. This filter uses a weight function to prevent noise due to the accelerometer and drifting due to the gyroscope. This weight is defined by alpha, and is determined through testing.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_MainCode.jpg" alt="..." width="500" height="450" /></span>
+                            <p>The value for alpha was determined to be 0.1, with the plot of the angles shown below. This filter significantly minmized the noise of the measurements, and kept accurate measurements.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_PLOT_alpha0.1.jpg" alt="..." width="500" height="450" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
-                </div>
+          
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Sample Data</h3>
+                            <p>By removing all delays and Serial.print statements, and by storing time, accelerometer data, and gyroscope data, the new values are sampled at an average of 3ms. This is very fast, and will unlikely be used as this will give us a large amount data in a small amount of time, which will in turn take up storage on the Artemis and prevent us from understanding what the robot does for a long period of time. The data was stored in 7 string arrays, and then sent to Jupyter one timestep at a time. This is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_SampleData_IMU.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_SampleData_IMU_P2.jpg" alt="..." width="500" height="450" /></span>
+                            <p>To test both the Time-of-Flight and IMU sensors together, both were connected to the Artemis using the breakout board. The data was then collected in separate string arrays, and then sent to Jupyter one line at a time. This is seen by the output from Jupyter:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P1.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P2.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P3.jpg" alt="..." width="500" height="450" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Cut the Coord</h3>
+                            <p>Given the one 850mAh battery and one 650mAh battery, the decision was to power the Artemis with the 650mAh battery, and power the batteries with the 850mAh battery. This will be done for two reasons. The first is that the motors will require more energy to run than the Artemis. This means that using the 850mAh battery will last the motors longer than the 650mAh battery will. The second reason is that the 850mAh battery will make the robot faster than the 650mAh at its maximum, as it will be able to send more power to the motors. Because of this, the 650mAh battery was converted to fit the Artemis, as seen in the image below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_CutTheCoord.jpg" alt="..." width="500" height="450" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Record a Stunt</h3>
+
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
             </section>
             <hr class="m-0" />
             <!-- Interests-->
