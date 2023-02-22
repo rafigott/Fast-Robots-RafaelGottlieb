@@ -293,7 +293,7 @@
                             <p>For future labs, it is important for the robot to gather data as quickly as possible. To test this, the sensor readings were compared to time, shown in the video below. The time between measurements taken was about 40ms. This is the minimum time between data points, meaning that the limiting factor was the time that the Artemis takes between reading and sending the data. </p>
                             <iframe width="500" height="400"
                                 src="https://youtube.com/embed/dmtk-35CIms">
-                        </iframe>
+                            </iframe>
                             <p>To test the readings, the distances of both sensors were taken over time, and sent to Jupyter using the notification handler developed in lab 2.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab3Reading2ToF.jpg" alt="..." width="500" height="450" /></span>
                         </div>
@@ -389,6 +389,14 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Record a Stunt</h3>
+                        <p>The robot can move in very quick motions and maneuver around objects very easily. While testing the robot, it was notice that the speed was unable to change. In the video below,  the robot spun in a circle. However, it was unable to slow down, maintaing its fast pace. In future labs, we will work with PWM in order to be able to slow the robot and control the velocity of its motion.</p>
+                        <iframe width="500" height="400"
+                                src="https://youtube.com/embed/dmtk-35CIms">
+                        </iframe>    
+                        <p>This motion was measured using the IMU and ToF sensors connected to the Artemis. ThE data was sent via Bluetooth to Jupyter after 5s:</p>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Data.jpg" alt="..." width="500" height="450" /></span>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Acc_Plot.jpg" alt="..." width="500" height="450" /></span>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_TOF_Plot.jpg" alt="..." width="500" height="450" /></span>
 
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
