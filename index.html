@@ -317,10 +317,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Lab Objective</h3>
-                            <p>The purpose of this lab is to be able to use an IMU sensor on our robot and to begin to use the RC robot. The lab consisted of setting up and measuring the data from the IMU. Then ToF and IMU data was gathered together, and this was then implemented on the RC robot.</p>
-                        </div>
-                        <span class="d-none d-lg-block"><img src="assets/img/Lab3_2ToF.jpg" alt="..." width="400" height="300" /></span>
-                       
+                            <p>The purpose of this lab is to be able to use an IMU sensor on our robot and begin to use the RC robot. The lab consisted of setting up and measuring the data from the IMU. Then the ToF and IMU data were gathered together and then implemented on the RC robot.</p>
+                        </div>                       
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -329,8 +327,8 @@
                             <p>The first step was to connect the Artemis to the IMU. This is shown below, with the IMU connected to a breakout board connecting to the Artemis:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4Artemis_IMU_Connection.jpg" alt="..." width="400" height="300" /></span>
                             <p>In order to test the IMU, the basic example under the IMU's library manager was used. This code is shown running below. Here, AD0_VAL is the last bit of the I2CC address. By default, it is 1. We will leave it at 1 to maintain the correct address.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Code.jpg" alt="..." width="400" height="300" /></span>
-                            <p>When plotting the output with Serial Plotter on Arduino, there seems to be little noise when the IMU is not moving. This is beneficial to us because this can allow us to reset the robot if its sensor readings are unreliable while moving at any point. In the second plot, the IMU was moving, showing tha tnoise increases while the IMU moves.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Code.jpg" alt="..." width="700" height="450" /></span>
+                            <p>When plotting the output with Serial Plotter on Arduino, there seems to be little noise when the IMU is not moving. This is beneficial to us because this can allow us to reset the robot if its sensor readings are unreliable while moving at any point. In the second plot, the IMU was moving, showing that noise increases while the IMU moves.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_NoMove.jpg" alt="..." width="400" height="300" /></span>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Move.jpg" alt="..." width="400" height="300" /></span>                            
                         </div>
@@ -340,12 +338,12 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Accelerometer</h3>
                             <p>The accelerometer on the IMU gathers the acceleration in micro G's. In order to calculate the angle on the x and y axis, roll and pitch respectively, we need to use the inverse tangent. The equations for roll (phi) and pitch (theta) are shown below:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Accel_Eq.jpg" alt="..." width="400" height="300" /></span>
-                            <p>Using these equations, the pitch and roll were found at each time step and plotted using serial plotter, seen below. When rotating either pitch or roll to 90 degrees, the other becomes very noisy at 90 degrees. For example, the first rotation to -90 degrees was pitch, and once it hit 90, the roll angle became very noisy, when it should have stayed close to 0.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Accel_Eq.jpg" alt="..." width="250" height="100" /></span>
+                            <p>Using these equations, the pitch and roll were found at each time step and plotted using Serial Plot, seen below. When rotating either pitch or roll to 90 degrees, the other becomes very noisy at 90 degrees. For example, the first rotation to -90 degrees was pitch, and once it hit 90, the roll angle became very noisy, when it should have stayed close to 0.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll.jpg" alt="..." width="600" height="300" /></span>
                             <p>Because of the noise in the sensor, a frequency spectrum analysis was done to determine if a low pass filter was needed to decrease the noise in the sensor reading.<p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis.jpg" alt="..." width="600" height="300" /></span>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis_AngleVSTime.jpg" alt="..." width="600" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis.jpg" alt="..." width="600" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_FourierAnalysis_AngleVSTime.jpg" alt="..." width="600" height="450" /></span>
                             <p>Based on the plots above, it was determined that a low pass filter was not needed, as there was no high amplitude outliers at large frequencies where we will operate the robot. Additionally, from looking at the data sheet, the IMU has a low pass filter as its default, meaning an additional filter was not needed to improve the noise.</p>
 
                         </div>
@@ -354,13 +352,13 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Gyroscope</h3>
-                            <p>In order to decrease the noise from the accelerometer data, the gyroscope reading needed to be taken. From the graphs below, the gyroscope data drifts as time increases, with the first plot being with a 20s delay, and the second being with a 100s delay. Though the data has little noise, this drifting would cause major errors with the robot, giving it the wrong angles. Because of this, the gyroscope and accelerometer needed to be combined to create an accurate sensor with little noise.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_20s.jpg" alt="..." width="700" height="100" /></span>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_100s.jpg" alt="..." width="500" height="450" /></span>
+                            <p>In order to decrease the noise from the accelerometer data, the gyroscope reading needed to be taken. From the graphs below, the gyroscope data drifts as time increases, with the first plot being with a 20s delay, and the second being with a 100s delay. Though the data has little noise, this drifting would cause major errors with the robot, giving it the wrong angles. Because of this, the gyroscope and accelerometer needed to be combined to create an accurate sensor with little noise. Additionally, by comparing the graphs, the longer the delay the larger the amount the gyroscope drifts. This measn that we want to try and minimize the time between data points while running our robot.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_20s.jpg" alt="..." width="500" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Pitch_Roll_Yaw_Gyro_Data_100s.jpg" alt="..." width="500" height="400" /></span>
                             <p>The complimentary filter, with the code shown below, was developed to solve this issue. This filter uses a weight function to prevent noise due to the accelerometer and drifting due to the gyroscope. This weight is defined by alpha, and is determined through testing.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_MainCode.jpg" alt="..." width="500" height="450" /></span>
-                            <p>The value for alpha was determined to be 0.1, with the plot of the angles shown below. This filter significantly minmized the noise of the measurements, and kept accurate measurements.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_PLOT_alpha0.1.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_MainCode.jpg" alt="..." width="450" height="400" /></span>
+                            <p>The value for alpha was determined to be 0.1, with the plot of the angles shown below. This filter significantly minimized the noise of the measurements, and kept accurate measurements.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_COMP_FILTER_PLOT_alpha0.1.jpg" alt="..." width="800" height="400" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -372,9 +370,9 @@
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_SampleData_IMU.jpg" alt="..." width="500" height="450" /></span>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_SampleData_IMU_P2.jpg" alt="..." width="500" height="450" /></span>
                             <p>To test both the Time-of-Flight and IMU sensors together, both were connected to the Artemis using the breakout board. The data was then collected in separate string arrays, and then sent to Jupyter one line at a time. This is seen by the output from Jupyter:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P1.jpg" alt="..." width="500" height="450" /></span>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P2.jpg" alt="..." width="500" height="450" /></span>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P3.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P1.jpg" alt="..." width="700" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P2.jpg" alt="..." width="700" height="450" /></span>
+                            <!-- <span class="d-none d-lg-block"><img src="assets/img/Lab4_5s_All_Data_P3.jpg" alt="..." width="300" height="40" /></span> -->
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -389,14 +387,14 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Record a Stunt</h3>
-                        <p>The robot can move in very quick motions and maneuver around objects very easily. While testing the robot, it was notice that the speed was unable to change. In the video below,  the robot spun in a circle. However, it was unable to slow down, maintaing its fast pace. In future labs, we will work with PWM in order to be able to slow the robot and control the velocity of its motion.</p>
+                        <p>The robot can move in very quick motions and maneuver around objects very easily. While testing the robot, it was notice that the speed was unable to change. In the video below, the robot spun in a circle. However, it was unable to slow down, maintaing its fast pace. In future labs, we will work with PWM in order to be able to slow the robot and control the velocity of its motion.</p>
                         <iframe width="500" height="400"
-                                src="https://youtube.com/embed/dmtk-35CIms">
+                                src="https://youtube.com/embed/SCujhPGUwok">
                         </iframe>    
-                        <p>This motion was measured using the IMU and ToF sensors connected to the Artemis. ThE data was sent via Bluetooth to Jupyter after 5s:</p>
-                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Data.jpg" alt="..." width="500" height="450" /></span>
-                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Acc_Plot.jpg" alt="..." width="500" height="450" /></span>
-                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_TOF_Plot.jpg" alt="..." width="500" height="450" /></span>
+                        <p>This motion was measured using the IMU and ToF sensors connected to the Artemis. Thedata was sent via Bluetooth to Jupyter after 5s:</p>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Data.jpg" alt="..." width="600" height="500" /></span>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Acc_Plot.jpg" alt="..." width="500" height="400" /></span>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_TOF_Plot.jpg" alt="..." width="500" height="400" /></span>
 
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
