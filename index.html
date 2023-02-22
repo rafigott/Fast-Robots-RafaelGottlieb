@@ -325,12 +325,12 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Setup the IMU</h3>
                             <p>The first step was to connect the Artemis to the IMU. This is shown below, with the IMU connected to a breakout board connecting to the Artemis:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4Artemis_IMU_Connection.jpg" alt="..." width="400" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4Artemis_IMU_Connection.jpg" alt="..." width="700" height="450" /></span>
                             <p>In order to test the IMU, the basic example under the IMU's library manager was used. This code is shown running below. Here, AD0_VAL is the last bit of the I2CC address. By default, it is 1. We will leave it at 1 to maintain the correct address.</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Code.jpg" alt="..." width="700" height="450" /></span>
                             <p>When plotting the output with Serial Plotter on Arduino, there seems to be little noise when the IMU is not moving. This is beneficial to us because this can allow us to reset the robot if its sensor readings are unreliable while moving at any point. In the second plot, the IMU was moving, showing that noise increases while the IMU moves.</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_NoMove.jpg" alt="..." width="400" height="300" /></span>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Move.jpg" alt="..." width="400" height="300" /></span>                            
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Plot_NoMove.jpeg" alt="..." width="550" height="300" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_Setup_Plot_Move.jpeg" alt="..." width="550" height="300" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -380,7 +380,7 @@
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Cut the Coord</h3>
                             <p>Given the one 850mAh battery and one 650mAh battery, the decision was to power the Artemis with the 650mAh battery, and power the batteries with the 850mAh battery. This will be done for two reasons. The first is that the motors will require more energy to run than the Artemis. This means that using the 850mAh battery will last the motors longer than the 650mAh battery will. The second reason is that the 850mAh battery will make the robot faster than the 650mAh at its maximum, as it will be able to send more power to the motors. Because of this, the 650mAh battery was converted to fit the Artemis, as seen in the image below:</p>
-                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_CutTheCoord.jpg" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab4_CutTheCoord.jpeg" alt="..." width="500" height="400" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
@@ -391,7 +391,7 @@
                         <iframe width="500" height="400"
                                 src="https://youtube.com/embed/SCujhPGUwok">
                         </iframe>    
-                        <p>This motion was measured using the IMU and ToF sensors connected to the Artemis. Thedata was sent via Bluetooth to Jupyter after 5s:</p>
+                        <p>This motion was measured using the IMU and ToF sensors connected to the Artemis. The data was then sent via Bluetooth to Jupyter after 5s:</p>
                         <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Data.jpg" alt="..." width="600" height="500" /></span>
                         <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_Acc_Plot.jpg" alt="..." width="500" height="400" /></span>
                         <span class="d-none d-lg-block"><img src="assets/img/Lab4_Stunt_TOF_Plot.jpg" alt="..." width="500" height="400" /></span>
