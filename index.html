@@ -416,7 +416,7 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">Prelab</h3>
-                            <p>To connect the two motors from the robot to the Artemis, two dual motor drivers were used, one for each motor. One motor was connected to pins 7 and 9 and the other to pins 11 and 12. These pins were chosen due to their PWM capabilities, as it will be for future labs. The connection is shown below:</p>
+                            <p>To connect the two motors from the robot to the Artemis, two dual motor drivers were used, one for each motor. One motor was connected to pins 7 and 9 and the other to pins 11 and 12. These pins were chosen due to their PWM capabilities, as it will be for future labs. The connections are shown below:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab5_MotorRobotPinDiagram.png" alt="..." width="600" height="350" /></span>
                             <p>The lab kit comes with a 650mAh and an 850mAh battery. This allows the Artemis and motors to be run from separate power sources to avoid transient effects, as the motor’s large changes in current wil turn off the Artemis and cause the code to reset once it turns back on. Because the motors use more power than the Artemis, the motors will be connected to the 850mAh battery, while the 650mAh battery will be connected to the Artemis.</p>
                         </div>
@@ -435,7 +435,7 @@
                             </iframe>   
                             <p>The second dual motor driver was then connected to the other motor, and the functionality was tested using the 850mAh battery. In the video below, the wheels move smoother with the battery than with the power supply:</p>
                             <iframe width="500" height="400"
-                                src="https://youtube.com/shorts/b5CKiW7Yh_w?feature=share">
+                                src="https://www.youtube.com/watch?v=Ml-URcfLRwk">
                             </iframe> 
                             <p>Once the motors were connected, the robot was put together with all the components used in the previous labs. This is seen below:</p>
                             <span class="d-none d-lg-block"><img src="assets/img/Lab5_RobotSetUp.png" alt="..." width="450" height="500" /></span>
@@ -449,7 +449,12 @@
                             <span class="d-none d-lg-block"><img src="assets/img/Lab5_LowerLimitCode.png" alt="..." width="300" height="400" /></span>
                             <p>In order to drive the robot in a straight line, a calibration factor was determined to find the ratio that the PWM value of the left wheels needed to be increased based on the right wheel value. This was initially done by taking an upper limit of 255 and both lower limits, finding the possible PWM values in these ranges, and then finding the ratio between the two. This was then implemented in testing. Setting the right wheels to a value of 115, the left wheels should be at 109. However, during physical testing, the left wheels needed to be at a value of 130 in order to drive the robot straight. The calibration factor was then changed to account for the physical motors, coming to a value of 2.1, meaning to maintain a straight path, increasing the PWM value of the right wheels by 1 means increasing the left wheels by 2.1. The robot moving in a straight line is seen below:</p>
                             <iframe width="500" height="400"
-                                src="https://youtube.com/shorts/6zHykWkSFRU?feature=share">
+                                src="https://www.youtube.com/watch?v=MhKKR4DMbvA">
+                            </iframe> 
+                            <p>To demonstrate full open loop control capabilities, the robot was programmed to move foward for one second, rotate ,and move forward again for one second. The video of the motion is shown below:</p>
+                            
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/watch?v=8PORNmkZEgA">
                             </iframe> 
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
@@ -461,7 +466,7 @@
                             <span class="d-none d-lg-block"><img src="assets/img/Lab5_AnalogWriteSpeed.png" alt="..." width="225" height="200" /></span>
                             <p>The lowest PWM value while the robot was in motion was tested to be 25 for both motors. This was done by initially running the robot at its lower limit value, and then decreasing the PWM value until the robot stopped moving.</p>
                             <iframe width="500" height="400"
-                                src="https://youtube.com/shorts/6mPsZpSkYu0?feature=share">
+                                src="https://www.youtube.com/watch?v=MVoLRMpTq58">
                             </iframe> 
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
