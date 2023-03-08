@@ -401,34 +401,73 @@
                     </div>
             </section>
             <hr class="m-0" />
-            <!-- Interests-->
+            <!------------------------- Lab 5 -------------------------->
             <section class="resume-section" id="Lab5">
                 <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
+                    <h2 class="mb-5">Lab 5: Motors and Open Loop Control</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>The goal of this lab was to fully implement the robot and to use open loop control on the car. This involved connecting the motors to the Artemis and placing all the sensors on the robot.</p>
+                        </div>
+                        <span class="d-none d-lg-block"><img src="assets/img/Lab5_RobotSetUp.png" alt="..." width="400" height="500" /></span>                       
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Prelab</h3>
+                            <p>To connect the two motors from the robot to the Artemis, two dual motor drivers were used, one for each motor. One motor was connected to pins 7 and 9 and the other to pins 11 and 12. These pins were chosen due to their PWM capabilities, as it will be for future labs. The connection is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_MotorRobotPinDiagram.png" alt="..." width="600" height="350" /></span>
+                            <p>The lab kit comes with a 650mAh and an 850mAh battery. This allows the Artemis and motors to be run from separate power sources to avoid transient effects, as the motor’s large changes in current wil turn off the Artemis and cause the code to reset once it turns back on. Because the motors use more power than the Artemis, the motors will be connected to the 850mAh battery, while the 650mAh battery will be connected to the Artemis.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Testing the Dual Motor Driver</h3>
+                            <p>To test the dual motor driver connection to the Artemis, a power supply was used in place of the motor, and both the input and output of the driver were read using an oscilloscope:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_PowerSupplyOscilloscope.png" alt="..." width="500" height="500" /></span>
+                            <p>The power supply was set to the same voltage output as the 850mAh battery, 3.7V, to simulate the voltage readings. Pin 12 was set to a duty cycle of 100, and the reading from the oscilloscope is shown below. Here, the blue curve represents the positive output voltage to the motor and the yellow curve denotes the negative output voltage to the motor. Because the code set one pin to 100 and the other to 0, the yellow curve should be essentially 0, while the other showed voltage values. The blue curve is shown as a square wave, which validates the motor driver, as there should be a constant voltage value at each increment in time.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_OscilloscopeData.png" alt="..." width="600" height="375" /></span>
+                            <p>The dual motor drive was then connected to one of the motors on the robot. The video of the motors powered by the power supply is shown below. In this video, the wheels were programmed to spin in either direction for 3 seconds each. While running, there were issues with the power supply, as the wheels would stop and start quickly due to the maximum current in the power supply being reached. This issue was fixed by using the battery given in the lab kit.</p>
+                            <iframe width="500" height="400"
+                                src="https://youtube.com/embed/j-wftF-DKPI">
+                            </iframe>   
+                            <p>The second dual motor driver was then connected to the other motor, and the functionality was tested using the 850mAh battery. In the video below, the wheels move smoother with the battery than with the power supply:</p>
+                            <iframe width="500" height="400"
+                                src="https://youtube.com/shorts/b5CKiW7Yh_w?feature=share">
+                            </iframe> 
+                            <p>Once the motors were connected, the robot was put together with all the components used in the previous labs. This is seen below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_RobotSetUp.png" alt="..." width="450" height="500" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Lower Limit Value and Open Loop Control</h3>
+                            <p>The motor’s were then tested to understand its range. To do this, the lower limit value of the robot was tested. This was done by changing the PWM value until the wheels were able to start moving from a stationary position. This was done for both sides of the robot, with the left and right wheels having a lower limit value of 89 and 96, respectively:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_LowerLimitCode.png" alt="..." width="300" height="400" /></span>
+                            <p>In order to drive the robot in a straight line, a calibration factor was determined to find the ratio that the PWM value of the left wheels needed to be increased based on the right wheel value. This was initially done by taking an upper limit of 255 and both lower limits, finding the possible PWM values in these ranges, and then finding the ratio between the two. This was then implemented in testing. Setting the right wheels to a value of 115, the left wheels should be at 109. However, during physical testing, the left wheels needed to be at a value of 130 in order to drive the robot straight. The calibration factor was then changed to account for the physical motors, coming to a value of 2.1, meaning to maintain a straight path, increasing the PWM value of the right wheels by 1 means increasing the left wheels by 2.1. The robot moving in a straight line is seen below:</p>
+                            <iframe width="500" height="400"
+                                src="https://youtube.com/shorts/6zHykWkSFRU?feature=share">
+                            </iframe> 
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
-                </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">5000 Level Tasks: analogWrite Speed and Lower Limit Value</h3>
+                            <p>Running the analogWrite line on the Artemis runs at a frequency of around 414 Hz. This is adequately fast for our robot, as quick changes in direction are easily achievable. Manually configuring the timers may be useful to create a more steady PWM signal, as the quicker the reading the more the robot will be able to maintain the directed PWM signal.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab5_AnalogWriteSpeed.png" alt="..." width="225" height="200" /></span>
+                            <p>The lowest PWM value while the robot was in motion was tested to be 25 for both motors. This was done by initially running the robot at its lower limit value, and then decreasing the PWM value until the robot stopped moving.</p>
+                            <iframe width="500" height="400"
+                                src="https://youtube.com/shorts/6mPsZpSkYu0?feature=share">
+                            </iframe> 
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
             </section>
+            
             <hr class="m-0" />
             <!-- Interests-->
             <section class="resume-section" id="Lab6">
