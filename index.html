@@ -400,8 +400,9 @@
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
             </section>
-            <hr class="m-0" />
+            
             <!------------------------- Lab 5 -------------------------->
+            <hr class="m-0" />
             <section class="resume-section" id="Lab5">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Lab 5: Motors and Open Loop Control</h2>
@@ -473,209 +474,68 @@
                     </div>
             </section>
             
+            <!------------------------- Lab 7 -------------------------->
             <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab6">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
             <section class="resume-section" id="Lab7">
                 <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
+                    <h2 class="mb-5">Lab 7: Kalman Filter</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>Because the robot moves faster than the time of flight sensor can read data, it is important to be able to predict where the robot is going in order to avoid obstacles. The purpose of this lab was to learn how a Kalman Filter works, and to implement it onto the robot.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Estimate the Drag and Momentum of the robot.</h3>
+                            <p>A Kalman Filter works by predicting the position of the robot based on the state space model, and then updating this prediction using the sensor measurement. This function is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_KF_eq.png" alt="..." width="600" height="250" /></span>
+                            <p>In order to determine the A, B, and C matrices, a state space model was developed for the robot. For our robot, we used the distance to the wall (our position), and the robot's velocity. This is shown in the model below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_state_space_model.png" alt="..." width="400" height="200" /></span>
+                            <p>This model uses the drag (d) and momentum (m) to find the position and velocity values. The equations for these are: d = 1 / velocity( at steady state speed), and m = -d * time(at 90% of the steady state speed) / ln(0.1). To calculate these values, the robot was driven towards a wall at a distance far enough that the robot could reach steady state speed. Both time and time of flight data was then sent to JupyterLab, and the velocity was calculated at each time step, shown in the figure below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_D_M_CALC.png" alt="..." width="600" height="450" /></span>
+                            <p>Using this data, d = 0.390 and m = 0.137. With these values determined, the Kalman Filter could be completed.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
+                            <h3 class="mb-0">Initialising the Kalman Filter</h3>
+                            <p>To implement the Kalman Filter, both the A and B matrices needed to be discretized with the functions below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_A_B_discrete.png" alt="..." width="400" height="100" /></span>
+                            <p>Currently, to increase the accuracy of the calculation, the Ad and Bd matrices are calculated at each time step, as there are slightly different time steps each time through the data. However, upon discussion with a TA, with the difference in the time steps being very small, as well as the model having errors in itself, this is not necessary, and may be computationally expensive. Because of this, future work will entail initializing the Ad and Bd matrices values.</p>
+                            <p>The remaining matrix initializations come with the initial state of the model. The C matrix is identified to be C = [-1, 0], as the measurement being received is only from the time of flight data. The initial state of the space should be the initial distance measured from the data and a velocity of 0, as the robot is initially stationary. Lastly, the covariance matrices of the state, as well as the covariance of the sensor data need to be initialized. These are seen in the two matrices below. Initially, the time of flight data’s uncertainty is unknown, so the initial guess was about +-20mm in the reading. This meant sigma_3 was initialized at 20. For sigma_1 and sigma_2, the uncertainty of our state, the velocity, because the robot is not moving initially, has a high confidence the speed is 0, meaning that it should be low. This initial guess was 0.1. For sigma_1, the uncertainty should be similar to our sensor measurement, as it is the uncertainty in our position, directly dependent on the sensor reading. For this reason, it was initialized to 20. These parameters were tuned while testing the Kalman Filter in Jupyter.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_Covariance_matrices.png" alt="..." width="400" height="100" /></span>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
-                </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Implementing and testing the Kalman Filter in Jupyter:
+                            </h3>
+                            <p>The Kalman Filter was implemented in Jupyter with the function below. Data is stored on the robot whenever the distance sensor is read. Because of this, there are gaps in the readings that may cause the robot to hit the wall before detecting the wall. Because of this, time steps were added in between readings, and only the prediction step was taken.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_KF_jupyter.png" alt="..." width="600" height="400" /></span>
+                            <p>The initial test for the Kalman Filter is shown in the figure below. This is a good test, as the Kalman Filter closely follows the sensor readings, and only drifts during the prediction steps.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_Kf_test1.png" alt="..." width="600" height="500" /></span>
+                            <p>Comparing this to a bad test, let's say the belief in the sensor’s accuracy is low, with an uncertainty of +-100mm. Because of this we initialize sigma_3 to be 100^2, trusting our state model more than the sensor data. This will mean the robot follows the prediction step more than the sensor measurement, and the difference between the Kalman Filter and the sensor data will be quite significantly off, shown in the figure below.</p> 
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_Kf_test_2.png" alt="..." width="600" height="500" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Implementing the Kalman Filter on the Robot</h3>
+                            <p>With the parameters of the Kalman Filter completed, the Kalman Filter was then implemented on the robot. This is shown in the code snippets below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_Kf_Arduino_A_B.png" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_KF_arduino_function.png" alt="..." width="500" height="450" /></span>
+                            <p>Running this on the robot outputs the data seen in the figure below. This plot confirms that the Kalman Filter runs on the Artemis, however, the Kalman Filter is slower than the sensor output, meaning that there is some error in the way the filter is run. Because of this, more testing will need to be done before the stunt can be run for lab 8.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_KF_arduino_plot.png" alt="..." width="600" height="500" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
             </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab8">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab9">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab10">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab11">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="Lab12">
-                <div class="resume-section-content">
-                    <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 1</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write Something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 2</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Part 3</h3>
-                            <div class="subheading mb-3">Title</div>
-                            <p>Write something here</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
-                    </div>
-                </div>
-            </section>
+
             <hr class="m-0" />
         </div>
         <!-- Bootstrap core JS-->
