@@ -473,6 +473,89 @@
                         <div class="flex-shrink-0"><span class="text-primary"></span></div>
                     </div>
             </section>
+
+            
+            <!------------------------- Lab 6 -------------------------->
+            <hr class="m-0" />
+            <section class="resume-section" id="Lab6">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 6: PID Control</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>The goal of this lab is to gain a strong understanding of a PID controller. This was done through implementing a PID controller onto the robot. </p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Prelab</h3>
+                            <p>A PID controller allows a robot to maintain speed, position, or orientation predictions over different battery levels and surfaces. This controller takes in the error of the desired value and the current value, and uses a proportional, integral, and derivative controller to change the control input of the robot to the desired value. This is shown in below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_PID_eq.png" alt="..." width="350" height="80" /></span>
+                            <p>The proportional control multiplies the error of the current by a constant Kp. The integral control multiplies the integral of the error over the total time by a constant Ki. Because our robot is a discrete model, this becomes the sum of the products of the error and changes in time at each time step. Finally the derivative control is the product of the rate of change of the error and a constant Kd. These constants will be tuned during the lab to optimize the controller.</p>
+                            <p>To perform this lab, a strong code base needed to be designed. Because uploading code to the Artemis is time consuming, the Kp, Ki, and Kd values needed to be inputted using bluetooth. This was done using the case “SET_PID_VALUES,” which inputted the Kp, Ki, and Kd values (in this order, and was sent to the Artemis using bluetooth. This is shown below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_Set_PID_Values.png" alt="..." width="450" height="400" /></span>
+                            <p>To test and complete the task, two additional cases were made: PID_START and ORIENT_CONTROL_START. These inputted either a 1 or 0, and if the input was 1, the main while loop in the Artemis would run with PID control, and if it was 0, the robot would stop moving. After running test cases, the data was then sent to Python using the SEND_DATA case. For this lab, the data was taken as follows: time, the front time of flight sensor, the angle of the robot, the right and left wheel PWM values, and the error at each time step.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_PID_Start.png" alt="..." width="450" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_Orient_Start.png" alt="..." width="450" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_Send_Data.png" alt="..." width="450" height="400" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Implementing the PID controller</h3>
+                            <p>To lighten the load for future labs, Task B, orientation control, was chosen. This task involved driving the robot towards a wall and making a 180 degree turn upon getting within one meter of the wall. In order to be able to turn exactly 180 degrees, a PID controller was implemented onto the robot. Shown in the figure below, the controller finds the current error, the difference between the desired angle and the current angle, and solves for an input u to the speed based on a PID controller.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_PID_Arduino.png" alt="..." width="450" height="450" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">P Controller</h3>
+                            <p>In order to optimize the controller, the Kp, Ki, and Kd values needed to be tuned. This was done by testing the robot spinning 180 degrees from a stationary position. This was done by creating a P controller, then a PI controller, and finally a PID controller.  The first constant that was tuned was the Kp value. Using a P controller, the first test was done at Kp = 2. Shown in the figure below, the robot quickly moves towards the desired angle of 180 but does not cause overshoot. For the P controller, the goal is to minimally overshoot the angle in order for the integral and derived controllers to balance the controller.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_P_Kp_2.png" alt="..." width="600" height="400" /></span>
+                            <p>Because of this, the Kp value was increased to 4, outputting the plot below. This creates a small overshoot in the angle, however, the robot moves much quicker to the desired angle initially. This overshoot will be adjusted by tuning the Ki and Kd values to optimize the controller.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_P_Kp_4.png" alt="..." width="600" height="400" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">PI Controller and Wind Up (5000 level task)</h3>
+                            <p>Once the Kp value was determined, the integral controller was added. Because the integral control is the integral of the error over time, the controller has an issue with drifting away. For example, if the error remains positive, the integral will continually increase, and u will become increasingly large, meaning that the P controller will have no effect because the integral is too large. Because of this, the integral controller needs a wind up in order to prevent this drift. A cut off was introduced into the integral controller. In order to map the u output to the PWM values, the map function in Arduino was used. This takes in the u value, the range of possible u values, and the range of possible PWM values, and maps the u value to the PWM value. The range of u value was any number between -200 and 200. Because of this, the integral cut off was determined to be +- 200, meaning any values of the I controller outside of -200 and 200 would be set to +-200. This is shown in the implementation of the PID controller in the Arduino code earlier in the report.</p>
+                            <p>The first test of the integral control was set at Ki = 0.1. This is shown in the plot below. Here, the robot moves slower to the desired angle, meaning the Ki value needed to increase.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_P_Kp_4_Ki_0.1.png" alt="..." width="600" height="400" /></span>
+                            <p>Ki was then increased to 0.5, shown below. This creates a very large overshoot and oscillation in the angle measurement, meaning that the integral control has too much influence on the u value.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_P_Kp_4_Ki_0.5.png" alt="..." width="600" height="400" /></span>
+                            <p>Because of this, the value of Ki decreased to 0.25.  Here, the robot oscillates between the desired angle minimally. The robot does struggle to turn initially, however, this can be fixed with the derivative controller. Additionally, the battery of the motors was charged.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_P_Kp_4_Ki_0.25.png" alt="..." width="600" height="400" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">PID Controller</h3>
+                            <p>The derivative controller was compared at Kd = 0.4 and Kd = 0.8. Here, both seemed to work, but using the value of Kd = 0.8 showed quicker results towards the desired turn angle. This is shown in the plots below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_PID_Kp_4_Ki_0.25_Kd_0.4.png" alt="..." width="600" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_PID_Kp_4_Ki_0.25_Kd_0.8.png" alt="..." width="600" height="400" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Orientation Control Task</h3>
+                            <p>With the PID controller determined, task B was able to be completed. This involved driving the robot towards the wall and then turning within a meter from the wall. This is shown in the video below:</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/uuboOy5KY9Q">
+                            </iframe> 
+                            <p>The plot of the distance data and the angle of the robot were plotted over time from the video above:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_Orient_Control_Data_Distance.png" alt="..." width="600" height="400" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab6_Orient_Control_Data_Yaw.png" alt="..." width="800" height="500" /></span>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+            </section>
             
             <!------------------------- Lab 7 -------------------------->
             <hr class="m-0" />
