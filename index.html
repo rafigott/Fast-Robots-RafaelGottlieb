@@ -619,6 +619,55 @@
                     </div>
             </section>
 
+            <!------------------------- Lab 8 -------------------------->
+            <hr class="m-0" />
+            <section class="resume-section" id="Lab8">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 8: Stunt!</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>So far in this course, we have built a robot, connected it to our computer for quick testing and analysis, created a PID controller and a Kalman filter to the robot to create a better performing robot. This lab takes the previous labs to complete a fast-paced stunt. Because the PID controller developed in lab 6 was for orientation control, this lab will be completed using the orientation control stunt.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Task B: Orientation Control</h3>
+                            <p>To complete the task, the robot needed to start within 4 meters of the wall, and turn within 3 feet of the wall. This was similar to the task in lab 6, except this task will be at a much faster speed. This stunt is seen being successfully completed three times in the following videos:</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/DrNJAMfK6gU">
+                            </iframe> 
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/xoSNL-aJF0E">
+                            </iframe> 
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/L-KxFKd9X5M">
+                            </iframe> 
+                            <p>The data for the first video can be seen below. The motor values drastically changed when the error value was high to turn around, validating the PID controller. The maximum speed of the robot before it began to turn around was 3m/s.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab_8_Motor_error_plot.png" alt="..." width="400" height="200" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab_8_velocity_plot.png" alt="..." width="600" height="450" /></span>
+                            <p>Through the completion of this stunt, two changes needed to be made to the robot. The first was that the duct tape on the wheels was replaced. In order to spin about its center as close as possible, the wheels needed to be smooth enough to drift on the floor. Adding the tape in lab 6 allowed the wheels to drift while tuning the PID controller. Replacing the tape took away all the dirt and dust that stuck onto the robot over the course of using it. The second change was that the Kalman filter was replaced with extrapolation. This was done because the Kalman filter was not working properly. From lab 7, the Kalman filter can be seen plotted below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab7_KF_arduino_plot.png" alt="..." width="600" height="450" /></span>
+                            <p>This does not make sense, as the Kalman Filter is improperly predicting the distances, as it believes it is farther from the wall than it is. Because of this, extrapolation was used to predict the data while the sensor was not taking measurements. This was done by computing the velocity of the robot each time the distance sensor was measured, and then multiplying the velocity by the current time step. This led the robot to be able to properly predict where the robot was moving towards. In this case, the belief in the sensor reading was one. This is shown in the plot below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab_8_Extrapolation_plot.png" alt="..." width="600" height="450" /></span>
+                            <p>With the extrapolation data, the robot was able to begin turning before hitting the wall. In the slow motion videos below, the robot was able to get very close to the wall without touching, leading to some cool videos.</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/TpKaONX5dYI">
+                            </iframe> 
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/Dy3hQvwhc-A?feature=share">
+                            </iframe> 
+                            <p>The lab did come with some issues, as sometimes the robot would disconnect, leading to undirected movements, as seen in the blooper below (the robot got very dizzy and needed a break after).</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/yxsaHyWFOt0">
+                            </iframe> 
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+            </section>
+
+
             <hr class="m-0" />
         </div>
         <!-- Bootstrap core JS-->
