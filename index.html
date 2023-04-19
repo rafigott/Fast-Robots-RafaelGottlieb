@@ -667,6 +667,66 @@
                     </div>
             </section>
 
+            <!------------------------- Lab 9 -------------------------->
+            <hr class="m-0" />
+            <section class="resume-section" id="Lab9">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Lab 9: Mapping</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Lab Objective</h3>
+                            <p>The objective of this lab is to be able to use the robot to map any environment. To test this on the robot, the robot was placed in a given map in the lab, and rotated at four locations, gathering Time-of-Flight sensor data while rotating. With this set of data, a map was created using transformation matrices.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Orientation Control</h3>
+                            <p>There were three options to rotate the robot: through open loop control, orientation control, or angular speed control. Because I had done orientation control in previous labs, this was the simplest option. The robot was set to turn in 10 degree increments with a total rotation of 370 degrees, using both time of flight sensors to read distances. This gave a total of 74 readings per point.</p>
+                            <p>Because the robot has four wheels, it can’t perfectly rotate on its axis. However, orientation control was done assuming the robot rotated around a constant axis. Because each square in the lab was a 1x1 ft square, the goal was to be able to rotate without leaving the square. To do this the PID controller was adjusted for rotation while initially stationary, increasing the Kp value to 8. This was because without an initial speed, the PWM value is not large enough to turn the wheels, meaning a large proportional controller increased the PWM value input to the motors. Below is a video of the robot rotating inside a square:</p>
+                            <iframe width="500" height="400"
+                                src="https://www.youtube.com/embed/NH8XctgmJSc">
+                            </iframe> 
+                            <p>The issue with the IMU is that the gyroscope values tend to drift, as seen in lab 2. Because of this, the robot will overshoot its angle and not rotate correctly. One way to solve this was to continuously reset the current angle to 0 after reaching a desired angle. This would prevent compounding drift over the entire time the data was gathered. The error and PWM values are shown below. When the robot reached its desired angle, the angle was reset to 0, preventing drift to compound over time.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Read out Distances</h3>
+                            <p>The robot mapped the environment of the dedicated map in the lab. The map is based on a grid, with each square tile being one grid cell, measuring 1ft x 1ft. The highlighted square in orange is the origin, and the red squares are the locations that the robot gathered sensor information from (in feet): (5,-3), (5,3), (-3,-2), and (0,3).</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_physical_map.png" alt="..." width="550" height="450" /></span>
+                            <p>The data at each point is shown below, with the data in the global frame discussed later in the lab:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_global_-3_-2.png" alt="..." width="600" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_polar_-3_-2.png" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_global_0_3.png" alt="..." width="600" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_polar_0_3.png" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_global_5_-3.png" alt="..." width="600" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_polar_5_-3.png" alt="..." width="500" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_global_5_3.png" alt="..." width="600" height="450" /></span>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_polar_5_3.png" alt="..." width="500" height="450" /></span>                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Merge and Plot your Readings</h3>
+                            <p>In order to map the environment, transformation operations using matrices were done to convert the sensor measurements taken on the robot into a global frame. The first time-of-flight sensor was on the right side of the robot, while the second time-of-flight sensor was on the front of the robot. Given that the coordinate system for the robot is that the x axis points to the front of the robot, the poses of the robot in the robot frame were as follows:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_sensor_in_robot_pose.png" alt="..." width="450" height="75" /></span>
+                            <p>With this, the sensor pose in the robot frame was then converted to the global frame using the transformation matrix below, where theta is the current angle of the robot relative to the global frame’s origin, and the first two rows of the 3rd column is the x and y value of the robot in the global frame.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_matrix_operation.png" alt="..." width="600" height="200" /></span>
+                            <p>Using this operation at each point, the data was combined into the map below:</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_all_data_global.png" alt="..." width="800" height="450" /></span>                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">Convert to Line Based Map</h3>
+                            <p>With all the data, the walls were then manually guessed. Below is the final map with the walls displayed based on the data. Some data points were not converted to lines because those measurements were taken from far away and were most likely noise. For example, data set 4 was taken at (0,3), therefore the points that were closer to (5,-3) were ignored and the data from (5,-3) was trusted more.</p>
+                            <span class="d-none d-lg-block"><img src="assets/img/Lab9_final_map.png" alt="..." width="800" height="450" /></span>                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                    </div>
+            </section>
+
 
             <hr class="m-0" />
         </div>
