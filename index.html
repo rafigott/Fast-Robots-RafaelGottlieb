@@ -767,6 +767,7 @@
                                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                     <div class="flex-grow-1">
                                         <h3 class="mb-0">Prediction Step</h3>
+                                        <p>This was then used to predict the robot’s position. In the code shown below, there are 6 nested for loops. This is because the robot calculated the probability that the robot moved to its current pose from each grid cell. If the previous belief was 0, in the code written as 0.0001, then the probability would not be added. Otherwise, the code would run through each grid cell and calculate the probability that the robot is in each cell based on the odometry probability model.</p>
                                         <span class="d-none d-lg-block"><img src="assets/img/Lab10_prediction_step.png" alt="..." width="750" height="350" /></span>
                                     </div>
                                     <div class="flex-shrink-0"><span class="text-primary"></span></div>
@@ -774,6 +775,7 @@
                                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                     <div class="flex-grow-1">
                                         <h3 class="mb-0">Sensor Model</h3>
+                                        <p>This function is necessary for the update step, as this calculates the probability of each sensor measurement, calculating it as a gaussian model.</p>
                                         <span class="d-none d-lg-block"><img src="assets/img/Lab10_sensor_model.png" alt="..." width="700" height="200" /></span>
                                     </div>
                                     <div class="flex-shrink-0"><span class="text-primary"></span></div>
