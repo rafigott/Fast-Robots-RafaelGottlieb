@@ -800,6 +800,52 @@
                                 </div>
                         </section>
 
+                        <!------------------------- Lab 11 -------------------------->
+                        <hr class="m-0" />
+                        <section class="resume-section" id="Lab11">
+                            <div class="resume-section-content">
+                                <h2 class="mb-5">Lab 11: Localization (Real)</h2>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Lab Objective</h3>
+                                        <p>After implementing the Bayes filter into the simulation of the robot, the next step was to implement it using the real robot. In this lab, the robot took sensor readings collected from the robot, and sent them to the Jupyter Notebook using optimized localization code to localize the robot at the same 4 waypoints done in lab 9.</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Simulation</h3>
+                                        <p>To localize the robot, the map was divided into a 3-dimensional grid size of possible robot poses, with the axes representing x, y, theta, respectively, with x and y being the position of the robot and theta being the angle relative to the inertial frame. The size of the x-dimension is 12, the y dimension is 9, and the theta dimension is 18. The robot has a total of 1,944 poses. Because the Bayes filter runs through each grid cell, writing efficient code will be an important consideration in this lab.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_Sim_Ploy.png" alt="..." width="600" height="500" /></span>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Implement on the Robot</h3>
+                                        <p>The localization was done in Python, with the students being given an optimized Bayes filter. The focus of the implementation on the robot was to be able to rotate on its axis and get accurate Time of Flight sensor data. This is similar to lab 9, where the robot rotated on its own axis in order to map its surroundings. Because of this, the PID controller was already optimized for rotating on its axis. The code below shows the connection between the robot and Python:</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_PerformObservationLoop.png" alt="..." width="400" height="400" /></span>
+                                        <p>This performs the rotation, and then collects 18 Time of Flight sensor readings, beginning with the robot at 0 degrees, and rotating in increments of 20 degrees to 340 degrees. This was done using the asyncio function, which allows the while loop to run until 18 readings were being taken. Implementing this initially caused issues with localization. In the plot below, my robot initially localized in strange places, being either in the bottom left corner or in the center of a box. After debugging, the issue was fixed due to incorrect errors. Initially, I converted the distances to meters in the Arduino code, however, upon changing some code, I had removed this conversion, causing the units to be incorrect in the localization code and not performing correctly. Once this was fixed, the localization functioned properly.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_Issue.png" alt="..." width="600" height="500" /></span>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Tested Waypoints</h3>
+                                        <p>The localization for the waypoint (5, -3) is shown in the plot below. This was the worst of the waypoints tested. This was because the robot wasn’t able to get enough readings on the box in the bottom center to properly determine its location. Because of this, it would incorrectly localize itself.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_5_-3Waypoint.png" alt="..." width="600" height="500" /></span>
+                                        <p>Waypoint (5, 3) and (0, 3) localized a little better, shown below respectively. Shown below, the robot correctly determined its y coordinate, but struggled with the x coordinate. </p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_5_3Waypoint.png" alt="..." width="600" height="500" /></span>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_0_3Waypoint.png" alt="..." width="600" height="500" /></span>
+                                        <p>The waypoint (-3, -2) had the best localization. With the first plot being the belief of the robot and the second being the ground truth, it is shown that the robot correctly guessed its position. This is most likely due to the uniqueness of its position in the map. There is no other spot on the map that has close walls in 3 directions like there is in this spot. Because of this, each time I tested the robot in this location, it would localize correctly.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_-3_-2Waypoint_Belief.png" alt="..." width="600" height="500" /></span>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab11_-3_-2Waypoint_Ground_Truth.png" alt="..." width="600" height="500" /></span>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                        </section>
+
             <hr class="m-0" />
         </div>
         <!-- Bootstrap core JS-->
