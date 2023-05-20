@@ -864,7 +864,7 @@
                                         <p>In the week leading up to the lab, I began testing my localization, increasing the amount of data taken from 18 to 36, using both Time of Flight sensors to gather readings, getting a reading every 10 degrees. While testing, my PID controller for orientation was working poorly, with the left motors not moving at medium speeds. Using the oscilloscope, I measured the output signal on the Artemis pins, with pins 12 and 9 reading no signal when I set the value to high. Because of this, I changed the pins for the motor drivers on the Artemis.</p>
                                         <p>Once this was done, I then tested the motor drivers. The input signals to the drivers were high, however, both were not reading an output signal, even when the wheels were spinning. After speaking with my teaching assistant, Anya, we decided the motor drivers needed to be changed, however there were none in the lab. Because of this, I worked on lab 12 with my group member for the class, Julian Prieto, working with his robot and code for the lab.</p>
                                         <iframe width="500" height="400"
-                                            src="https://www.youtube.com/embed/">
+                                            src="https://www.youtube.com/embed/NkhoGc2R1YY?feature=share">
                                         </iframe> 
                                     </div>
                                     <div class="flex-shrink-0"><span class="text-primary"></span></div>
@@ -889,7 +889,7 @@
                                         <span class="d-none d-lg-block"><img src="assets/img/Lab12_Compass_Graph.png" alt="..." width="600" height="500" /></span>
                                         <p>Using the magnetometer turned out to be unreliable. The function would calculate the angle needed for the robot to turn to zero degrees based on the map in the lab. However, the magnetometer would calculate the wrong North value much of the time, causing the robot to unreliably rotate to the proper zero degree position for localization. This is shown in the video below.</p>
                                         <iframe width="500" height="400"
-                                            src="https://www.youtube.com/embed/">
+                                            src="https://www.youtube.com/embed/2ahzt1MK3Tc">
                                         </iframe> 
                                         <p>Instead of using the magnetometer, through testing we decided to use a correction angle each time after using the PID controller. These angles were found during testing and implemented with the “COMPASS” ble command in the algorithm shown in the previous section. There were three instances in which the robot needed correcting: after the first two instances of motion, after each localization, and when the robot reached a waypoint. After the first two movements, the robot needed to rotate 12 degrees clockwise, after each localization, the robot needed to rotate 5 degrees counterclockwise, and when the robot reached a waypoint, it needed to rotate 5 degrees clockwise.</p>
                                     </div>
