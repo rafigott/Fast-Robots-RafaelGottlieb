@@ -846,6 +846,88 @@
                                 </div>
                         </section>
 
+                        <!------------------------- Lab 12 -------------------------->
+                        <hr class="m-0" />
+                        <section class="resume-section" id="Lab12">
+                            <div class="resume-section-content">
+                                <h2 class="mb-5">Lab 12: Path Planning and Execution</h2>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Lab Objective</h3>
+                                        <p>This lab combined the previous labs to create a path planning algorithm for the robot. The objective was to reach 9 waypoints in the given map using any method. The method we chose was localization and PID control. This allowed the robot to function autonomously and adjust its position.</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Issues With Own Robot</h3>
+                                        <p>In the week leading up to the lab, I began testing my localization, increasing the amount of data taken from 18 to 36, using both Time of Flight sensors to gather readings, getting a reading every 10 degrees. While testing, my PID controller for orientation was working poorly, with the left motors not moving at medium speeds. Using the oscilloscope, I measured the output signal on the Artemis pins, with pins 12 and 9 reading no signal when I set the value to high. Because of this, I changed the pins for the motor drivers on the Artemis.</p>
+                                        <p>Once this was done, I then tested the motor drivers. The input signals to the drivers were high, however, both were not reading an output signal, even when the wheels were spinning. After speaking with my teaching assistant, Anya, we decided the motor drivers needed to be changed, however there were none in the lab. Because of this, I worked on lab 12 with my group member for the class, Julian Prieto, working with his robot and code for the lab.</p>
+                                        <iframe width="500" height="400"
+                                            src="https://www.youtube.com/embed/">
+                                        </iframe> 
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Path Planning</h3>
+                                        <p>Both of us had similar methods for the path planning process. The steps were as follows: localize the robot, calculate the necessary angle change and translation the robot needed to reach the next waypoint, use the PID control to move to the waypoint, localize again, and determine if it reached the waypoint. If the waypoint was reached, then the robot would begin moving to the next waypoint. The only exception to this was the first two waypoints in the lab. Because the straight movement from the first waypoint (-4, -3) to the second (-2, -1) was on a diagonal far from the map wall, we decided to add a waypoint (-2, -3) in between so the robot points directly straight towards a wall to get good Time of Flight data for the movement function. This allowed the robot to reach the first two necessary points efficiently, without needing localization.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_Init_Two_Points.png" alt="..." width="400" height="400" /></span>
+                                        <p>Once the first two movements were made, the robot localized to confirm its location at the second waypoints, and then would continue to move to each waypoint until it reached (0, 0). </p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_algorithm_1.png" alt="..." width="600" height="500" /></span>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_algorithm_2.png" alt="..." width="600" height="500" /></span>        
+                                        <p>One thing to note, because localization at times can be unreliable, the robot would determine it reached a waypoint if it localized within one foot of the waypoint. This meant that localizing in any tile directly next to the waypoint would confirm the waypoint was reached. This gave the robot a little bit of leeway in case it was half on the tile and localized on the tile next to the waypoint.</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Localization and the Compass Function</h3>
+                                        <p>While testing the localization, two important decisions were made. The first was that though an early assumption of having more Time of Flight data would improve the accuracy of localization, through testing it was discovered that taking 18 data points from the robot’s front Time of Flight sensor was significantly better than taking the 36 possible data points.</p>
+                                        <p>The second decision to be made was how to consistently keep the robot at zero degrees when beginning localization. Because the localization code runs through each sensor point beginning at zero degrees, a necessary part of the algorithm was how to consistently keep the robot at zero degrees. The initial idea was to use the magnetometer to determine North, and then be able to get a consistent zero degree direction in the lab, which was about 100 degrees in the clockwise direction from North. This was calculated by plotting the x and y values from the magnetometer and plotting them on the graph shown below, and then finding the offset of the values in order to calculate the proper direction of the robot.</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_Compass_Graph.png" alt="..." width="600" height="500" /></span>
+                                        <p>Using the magnetometer turned out to be unreliable. The function would calculate the angle needed for the robot to turn to zero degrees based on the map in the lab. However, the magnetometer would calculate the wrong North value much of the time, causing the robot to unreliably rotate to the proper zero degree position for localization. This is shown in the video below.</p>
+                                        <iframe width="500" height="400"
+                                            src="https://www.youtube.com/embed/">
+                                        </iframe> 
+                                        <p>Instead of using the magnetometer, through testing we decided to use a correction angle each time after using the PID controller. These angles were found during testing and implemented with the “COMPASS” ble command in the algorithm shown in the previous section. There were three instances in which the robot needed correcting: after the first two instances of motion, after each localization, and when the robot reached a waypoint. After the first two movements, the robot needed to rotate 12 degrees clockwise, after each localization, the robot needed to rotate 5 degrees counterclockwise, and when the robot reached a waypoint, it needed to rotate 5 degrees clockwise.</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">PID Control and MOVE_TO Command</h3>
+                                        <p>In order for the robot to move from one waypoint to the other, the “MOVE_TO” ble command is sent to the robot. This function inputs the current x and y belief of the robot and the x and y value of the next waypoint. It then moves the robot in the to steps shown below:</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_Move_To.png" alt="..." width="600" height="500" /></span>
+                                        <p>The first step is that it rotates to the angle necessary to drive straight to the robot. This is calculated using the atan2 function. Once the robot is at the proper angle, it then moves the correct distance from the waypoint using the Kalman filter Julian had developed in his lab 7 at a slow speed. This allows the robot to stop at the correct position. Once this is completed, the reference angle for the PID controller returns to 0 degrees, using the “COMPASS” function to correct itself after.</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Results</h3>
+                                        <p>The robot successfully ran twice. When the robot would fail a run, it would typically get stuck in the bottom right side of the map. This would be due to either localization errors or drift errors. Because the correction of the angle is not a reliable determination of zero degrees in the map, if the robot hit a wall, the robot would drift away from zero and change the necessary correction angle. This would lead to localization errors as well as movement errors. Additionally, if the robot localized poorly, the robot would then move in the wrong direction, and if this was too far away, it could cause the robot to get stuck. Below show the plot of an instance of this happening, with the robots belief being in blue and the waypoints it believed it reached in green:</p>
+                                        <span class="d-none d-lg-block"><img src="assets/img/Lab12_stuckonbottomright.png" alt="..." width="600" height="500" /></span>
+                                        <p>The first instance was early in the day on Friday May 19, 2023. After a few failed attempts, the robot was able to reach each waypoint aside from the last final 2 waypoints. However, this was due to our motor batteries failing, causing the robot to end its run. This is shown in the video below:</p>
+                                        <iframe width="500" height="400"
+                                            src="https://www.youtube.com/embed/_YsiSVX7M5A">
+                                        </iframe> 
+                                        <p>After some time editing the code by improving the correction angles, as well as changing the PID gains to better spin in place, the robot completed reaching each waypoint using localization shown below. It takes a while but is very exciting to see!!</p>
+                                        <iframe width="500" height="400"
+                                            src="https://www.youtube.com/embed/xlBptKfF8d8">
+                                        </iframe> 
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                    <div class="flex-grow-1">
+                                        <h3 class="mb-0">Acknowledgements</h3>
+                                        <p>I want to thank Julian Prieto for all his help during this lab. He did a lot of work on his robot this semester and it really showed while we were debugging and creating the algorithm for this lab. I also want to thank Alex for helping both set up my laptop for bluetooth, Jonathan for helping me understand a lot of the concepts in this course, Anya for being super helpful every week in lab, and Lemon for all their help this week working on lab 12, and for holding office hours so late in the day and week. Lastly, thank you Kirstin for this amazing course!</p>
+                                    </div>
+                                    <div class="flex-shrink-0"><span class="text-primary"></span></div>
+                                </div>
+                        </section>
             <hr class="m-0" />
         </div>
         <!-- Bootstrap core JS-->
